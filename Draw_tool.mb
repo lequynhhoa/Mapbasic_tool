@@ -1,0 +1,59 @@
+
+Include "mapbasic.def"
+Include "icons.def"
+Include "menu.def"
+
+Declare Sub Main
+Declare Sub WATER
+Declare Sub RESIDENT
+Declare Sub EXIT
+Declare Sub Polygon
+Dim i_display as STRING
+
+
+'STYLES
+SUB WATER
+	Set Style Pen MakePen(1, 2, Cyan)
+	i_display = "Water"
+	Run menu command M_TOOLS_POLYLINE
+END SUB
+
+SUB RESIDENT
+	Set Style Symbol MakeSymbol(52, RED, 16) 'MakeSymbol(shape, color, size)
+	i_display = "RESIDENT"
+	Run menu command M_TOOLS_POINT
+END SUB
+
+Sub Polygon
+	Set Style Pen MakePen(1,2,BLACK) 'MakePen(width, Pattern, Color): Chon cho line o vien ngoai
+	Set Style Brush MakeBrush(53, 5672960, 16777215) ' MakeBrush(Pattern, forecolor =( red * 65536) + ( green * 256) + blue , backcolor)
+	i_display = "Polygon"
+	Run Menu Command M_TOOLS_POLYGON
+End Sub
+
+SUB Main
+	
+'** BUTTON BAR menu ******************************************
+	Create ButtonPad "TOOLS" As 
+	' WATER
+		'Set Style Pen MakePen(20,1,RED)
+		PushButton	
+		Icon MI_ICON_POLYLINE_2
+		Calling WATER
+		HelpMsg "\nWater"
+	' ROAD
+		PushButton	
+		Icon MI_ICON_SYMBOL_2  		
+		Calling RESIDENT
+		HelpMsg "\nRESIDENT"
+	' POLYGON
+		PushButton
+		Icon MI_ICON_POLYGON_2
+		Calling Polygon
+		HelpMsg "\nPolygon"
+		Show
+END SUB
+
+SUB Exit
+	END PROGRAM
+END SUB
