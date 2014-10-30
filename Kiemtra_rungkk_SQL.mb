@@ -1,0 +1,130 @@
+
+Include "MapBasic.def"
+
+Dim TxtFile, RKK as String
+TxtFile = "E:\GFD_DATA\Study\MAPBASIC\Bando\RKK_sql.txt"
+RKK = "BQLRPHBUONDON_RUNGKK"
+
+Open File TxtFile For Append As #1
+Print #1, "------------------------12.Nguon goc rung (nggocr)--------------------------------"
+Select Count(*) from BQLRPHBUONDON_RUNGKK Where nggocr > 3 OR nggocr = 0 into qr_nggocr_cnt
+Fetch First from qr_nggocr_cnt
+Print #1, "So ban ghi co gia tri SAI (= 0 and > 3) cua cot nggocr: " & qr_nggocr_cnt.col1
+
+Select tt, ldlr,tk,khoanh,lo,dtich,nggocr from  RKK  where nggocr > 3 OR nggocr = 0 into qr_nggocr
+Fetch First from qr_nggocr
+Do While Not EOT(qr_nggocr)
+	Print #1, qr_nggocr.col1 &"," & qr_nggocr.col2 &"," & qr_nggocr.col3 &"," & qr_nggocr.col4 &"," & qr_nggocr.col5 &"," & qr_nggocr.col6 &"," & qr_nggocr.col7   
+Fetch Next from qr_nggocr
+Loop
+
+Print #1, "------------------------19. Nguon goc rung trong (nggocrt)--------------------------------"
+Select Count(*) from BQLRPHBUONDON_RUNGKK Where nggocrt > 3 OR nggocrt = 0 into qr_nggocrt_cnt
+Fetch First from qr_nggocr_cnt
+Print #1, "So ban ghi co gia tri SAI (= 0 and > 3) cua cot nggocrt: " & qr_nggocrt_cnt.col1
+
+Select tt, ldlr,tk,khoanh,lo,dtich,nggocrt from  RKK  where nggocrt > 3 OR nggocrt = 0 into qr_nggocrt
+Fetch First from qr_nggocrt
+Do While Not EOT(qr_nggocrt)
+	Print #1, qr_nggocrt.col1 &"," & qr_nggocrt.col2 &"," & qr_nggocrt.col3 &"," & qr_nggocrt.col4 &"," & qr_nggocrt.col5 &"," & qr_nggocrt.col6 &"," & qr_nggocrt.col7   
+Fetch Next from qr_nggocrt
+Loop
+
+Print #1, "------------------------20. Ma so tinh trang thanh rung (thanhrung )--------------------------------"
+Select Count(*) from BQLRPHBUONDON_RUNGKK Where thanhrung > 2 OR thanhrung = 0 into qr_thanhrung_cnt
+Fetch First from qr_thanhrung_cnt
+Print #1, "So ban ghi co gia tri SAI (= 0 and > 2) cua cot thanhrung: " & qr_thanhrung_cnt.col1
+'Print #1, "tt, ldlr,tk,khoanh,lo,dtich,thanhrung"
+Select tt, ldlr,tk,khoanh,lo,dtich,thanhrung from  RKK  where thanhrung > 2 OR thanhrung = 0 into qr_thanhrung
+Fetch First from qr_thanhrung
+Do While Not EOT(qr_thanhrung)
+	Print #1, qr_thanhrung.col1 &"," & qr_thanhrung.col2 &"," & qr_thanhrung.col3 &"," & qr_thanhrung.col4 &"," & qr_thanhrung.col5 &"," & qr_thanhrung.col6 &"," & qr_thanhrung.col7   
+Fetch Next from qr_thanhrung
+Loop
+
+Print #1, "------------------------25. Ma so cua dieu kien lap dia (lapdia )--------------------------------"
+Select Count(*) from BQLRPHBUONDON_RUNGKK Where lapdia > 6 OR lapdia = 0 into qr_lapdia_cnt
+Fetch First from qr_lapdia_cnt
+Print #1, "So ban ghi co gia tri SAI (= 0 and > 6) cua cot lapdia: " & qr_lapdia_cnt.col1
+'Print #1, "tt, ldlr,tk,khoanh,lo,dtich,thanhrung"
+Select tt, ldlr,tk,khoanh,lo,dtich,lapdia from  RKK  where lapdia > 6 OR lapdia = 0 into qr_lapdia
+Fetch First from qr_lapdia
+Do While Not EOT(qr_lapdia)
+	Print #1, qr_lapdia.col1 &"," & qr_lapdia.col2 &"," & qr_lapdia.col3 &"," & qr_lapdia.col4 &"," & qr_lapdia.col5 &"," & qr_lapdia.col6 &"," & qr_lapdia.col7   
+Fetch Next from qr_lapdia
+Loop
+
+Print #1, "------------------------26. Ma so cua loai rung theo muc dich su dung (malr3)--------------------------------"
+Select Count(*) from BQLRPHBUONDON_RUNGKK Where malr3 > 3 OR malr3 = 0 into qr_malr3_cnt
+Fetch First from qr_malr3_cnt
+Print #1, "So ban ghi co gia tri SAI (= 0 and > 3) cua cot malr3: " & qr_malr3_cnt.col1
+
+Select tt, ldlr,tk,khoanh,lo,dtich,malr3 from  RKK  where malr3 > 3 OR malr3 = 0 into qr_malr3
+Fetch First from qr_malr3
+Do While Not EOT(qr_malr3)
+	Print #1, qr_malr3.col1 &"," & qr_malr3.col2 &"," & qr_malr3.col3 &"," & qr_malr3.col4 &"," & qr_malr3.col5 &"," & qr_malr3.col6 &"," & qr_malr3.col7   
+Fetch Next from qr_malr3
+Loop
+
+Print #1, "------------------------27. Muc dich su dung dat - 12 ma su dung dat (mdsd)--------------------------------"
+Select Count(*) from BQLRPHBUONDON_RUNGKK where mdsd <> "PHDN" And mdsd <> "PHCS" And mdsd <>  "PHCC" And mdsd <>  "PHMS" And mdsd <> "VQG" And mdsd <> "BTTN" And mdsd <> "NCKH" And mdsd <> "VHCQ" And mdsd <> "SXGL" And mdsd <> "SXGN" And mdsd <> "SXTN" And mdsd <> "MDK" into qr_mdsd_cnt
+Fetch First from qr_mdsd_cnt
+Print #1, "So ban ghi co gia tri SAI (Khac 12 muc dich quy dinh) cua cot nggocr: " & qr_mdsd_cnt.col1
+
+Select tt, ldlr,tk,khoanh,lo,dtich,mdsd from BQLRPHBUONDON_RUNGKK where mdsd <> "PHDN" And mdsd <> "PHCS" And mdsd <>  "PHCC" And mdsd <>  "PHMS" And mdsd <> "VQG" And mdsd <> "BTTN" And mdsd <> "NCKH" And mdsd <> "VHCQ" And mdsd <> "SXGL" And mdsd <> "SXGN" And mdsd <> "SXTN" And mdsd <> "MDK" into qr_mdsd
+Fetch First from qr_mdsd
+Do While Not EOT(qr_mdsd)
+	Print #1, qr_mdsd.col1 &"," & qr_mdsd.col2 &"," & qr_mdsd.col3 &"," & qr_mdsd.col4 &"," & qr_mdsd.col5 &"," & qr_mdsd.col6 &"," & qr_mdsd.col7   
+Fetch Next from qr_mdsd
+Loop
+
+Print #1, "------------------------29. Ma so doi tuong su dung dat (dtuong)--------------------------------"
+Select Count(*) from BQLRPHBUONDON_RUNGKK Where dtuong > 11 OR dtuong = 0 into qr_dtuong_cnt
+Fetch First from qr_dtuong_cnt
+Print #1, "So ban ghi co gia tri SAI (= 0 and > 11) cua cot dtuong: " & qr_dtuong_cnt.col1
+
+Select tt, ldlr,tk,khoanh,lo,dtich,dtuong from  RKK  where dtuong > 11 OR dtuong = 0 into qr_dtuong
+Fetch First from qr_dtuong
+Do While Not EOT(qr_dtuong)
+	Print #1, qr_dtuong.col1 &"," & qr_dtuong.col2 &"," & qr_dtuong.col3 &"," & qr_dtuong.col4 &"," & qr_dtuong.col5 &"," & qr_dtuong.col6 &"," & qr_dtuong.col7   
+Fetch Next from qr_dtuong
+Loop
+
+Print #1, "------------------------32. Ma so tinh trang tranh chap (trchap)--------------------------------"
+Select Count(*) from BQLRPHBUONDON_RUNGKK Where trchap > 2 OR trchap = 0 into qr_trchap_cnt
+Fetch First from qr_trchap_cnt
+Print #1, "So ban ghi co gia tri SAI (= 0 and > 2) cua cot trchap: " & qr_trchap_cnt.col1
+
+Select tt, ldlr,tk,khoanh,lo,dtich,trchap from  RKK  where trchap > 2 OR trchap = 0 into qr_trchap
+Fetch First from qr_trchap
+Do While Not EOT(qr_trchap)
+	Print #1, qr_trchap.col1 &"," & qr_trchap.col2 &"," & qr_trchap.col3 &"," & qr_trchap.col4 &"," & qr_trchap.col5 &"," & qr_trchap.col6 &"," & qr_trchap.col7   
+Fetch Next from qr_trchap
+Loop
+
+Print #1, "------------------------33. Ma so ve tinh trang quyen su dung (quyensd)--------------------------------"
+Select Count(*) from BQLRPHBUONDON_RUNGKK Where quyensd > 4 OR quyensd = 0 into qr_quyensd_cnt
+Fetch First from qr_quyensd_cnt
+Print #1, "So ban ghi co gia tri SAI (= 0 and > 4) cua cot quyensd: " & qr_quyensd_cnt.col1
+
+Select tt, ldlr,tk,khoanh,lo,dtich,quyensd from  RKK  where quyensd > 4 OR quyensd = 0 into qr_quyensd
+Fetch First from qr_quyensd
+Do While Not EOT(qr_quyensd)
+	Print #1, qr_quyensd.col1 &"," & qr_quyensd.col2 &"," & qr_quyensd.col3 &"," & qr_quyensd.col4 &"," & qr_quyensd.col5 &"," & qr_quyensd.col6 &"," & qr_quyensd.col7   
+Fetch Next from qr_quyensd
+Loop
+
+Print #1, "------------------------35. Ma so ve tinh trang khoan bao ve (khoan)--------------------------------"
+Select Count(*) from BQLRPHBUONDON_RUNGKK Where khoan > 2 OR khoan = 0 into qr_khoan_cnt
+Fetch First from qr_khoan_cnt
+Print #1, "So ban ghi co gia tri SAI (= 0 and > 2) cua cot khoan: " & qr_khoan_cnt.col1
+
+Select tt, ldlr,tk,khoanh,lo,dtich,khoan from  RKK  where khoan > 2 OR khoan = 0 into qr_khoan
+Fetch First from qr_khoan
+Do While Not EOT(qr_khoan)
+	Print #1, qr_khoan.col1 &"," & qr_khoan.col2 &"," & qr_khoan.col3 &"," & qr_khoan.col4 &"," & qr_khoan.col5 &"," & qr_khoan.col6 &"," & qr_khoan.col7   
+Fetch Next from qr_khoan
+Loop
+
+
+Close File #1
