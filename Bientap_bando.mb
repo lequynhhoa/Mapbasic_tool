@@ -1,0 +1,318 @@
+Include "MAPBAsIC.DEF"
+Include "ICONS.DEF"
+Include "MENU.DEF"
+
+Declare sub main
+Declare Sub DiaTitle
+Declare Sub A4_Size
+Declare Sub iConA4
+Declare Sub PrintLayout
+Declare Sub iAbout
+Declare Sub ExitPro
+
+Sub Main
+	Create Menu "BIEN TAP BAN DO" As
+		"&Tao khung bao" Calling iConA4,
+		"&Dua ban do ra Layout" Calling DiaTitle,
+		"&Huong dan" Calling iAbout,
+		"&Exit" Calling ExitPro
+		
+	Alter Menu Bar Remove ID 7
+	Alter Menu Bar Add "BIEN TAP BAN DO"
+End Sub
+
+'*****************Frame to draw grid******************
+Sub iConA4
+	Create ButtonPad "Paper size" As 
+	ToolButton
+		Icon MI_ICON_LETTERS_P
+		Calling A4_Size
+End Sub
+
+Sub A4_Size
+	Dim iMap As Integer
+	Dim X As Float
+	Dim Y As Float
+	Dim A4_10k_width As Integer
+	Dim A4_10k_Height As Integer
+	
+	A4_10k_width = 1700
+	A4_10k_Height = 1900
+
+	iMap = FrontWindow()
+	
+	Set Map window iMap Layer 0 Editable On
+	Set CoordSys Earth Projection 8, 104, 7, 105.5, 0, 0.9999, 500000, 0
+	Set Distance Units "m"
+	
+	X = CommandInfo(1)
+	Y = CommandInfo(2)
+	
+	Create Rect Into window iMap
+	(X, Y) (X + 1700, Y + 1900 )
+	Pen (1,2,Black)
+	Brush (1, Black, Black)
+	
+End Sub
+'***********************End Frame to draw***********************
+
+Sub DiaTitle
+	
+	Dialog
+		Title "Tao Layout ban do"
+	Control StaticText
+		Title "Ten ban do: "
+		Position 5,7
+	Control EditText
+		Position 61, 5
+		ID 3
+		Width 140
+		Height 15
+	
+	Control StaticText
+		Title "Khu vuc: "
+		Position 5, 25
+		
+	Control EditText
+		Position 61, 23
+		ID 4
+		Width 140
+		Height 15
+	
+	Control OKButton
+		Title "Xuat Layout"
+		Position 35,45
+		Calling PrintLayout
+	Control CancelButton
+		Position 115,45
+		
+End Sub
+Sub PrintLayout
+
+Dim iMapWindowID As Integer
+Dim iLayoutWindowID As Integer
+
+Dim sPrinterName As String
+
+Dim s_Paper As string
+Dim s_Orient As string
+Dim i_Paper As smallint
+
+Dim mar, h_Pap, w_Pap As Float
+
+Dim A4_size As string
+Dim Scale As Float
+Dim ScaleLayout As Float
+Dim TextTitle,TextAdd, Textbox1, Textbox2, Textbox3, Textbox4 As String
+Dim legrgtk,legkh, legbd,legrtr As String
+
+
+Textbox1 = "§¥N VÞ §IÒU TRA"
+Textbox2 = "§¥N VÞ CHñ RõNG"
+Textbox3 = "§¥N VÞ PH£ DUYÖT"
+Textbox4 = "CHó GI¶I"
+
+legrgtk = "Ranh giíi tiÓu khu"
+legkh = "Ranh giíi kho¶nh"
+legbd = "§­êng b×nh ®é"
+legrtr = "Rõng trång"
+
+
+iMapWindowID = FrontWindow()
+Scale = 100
+
+Set Distance Units "m"
+Set Paper Units "cm"
+
+	sPrinterName = WindowInfo(FrontWindow(),WIN_INFO_PRINTER_NAME)
+	print sPrinterName
+
+' Paper format
+	s_Paper = "A4"
+	s_Orient = "Portrait"	
+'  Papersize.def value
+	i_Paper = 9
+'  Dimension of paper
+	h_Pap=21
+	w_Pap=29.7
+' -margi in cm
+	mar = 0.6			
+
+
+' Set Layout
+Layout
+	Position (0,0) Units "cm"
+	Width (w_Pap-mar*2) Units "cm" 
+	Height (h_Pap-mar*2) Units "cm"
+	Max
+  
+ 	iLayoutWindowId = FrontWindow()
+	
+	Set CoordSys Layout Units "cm"
+	Set Window FrontWindow() Title " ("+s_Paper+"-"+s_Orient+")"
+
+	A4_size = "Set Window FrontWindow() Printer Name """+sPrinterName+""" Orientation "+s_Orient+" Copies 1 Papersize "+i_Paper+""
+	run command A4_size	
+	
+' Put map to layout
+Create Frame Into Window iLayoutWindowId
+	(0,0) (21,28)
+	From Window iMapWindowID
+	Pen (1,1,Black)
+	Brush(1, black, black)
+	FillFrame On
+	
+	ScaleLayout = Scale * (21 - 0)
+Set Map Window iMapWindowID Zoom ScaleLayout Units "m"
+
+' Create box frame
+
+Create Rect into window iLayoutWindowID
+	(1,23.6) (20,29)
+	Pen (2,2,BLACK)
+	Brush (2, white, white)
+	
+' Create Text for boxes
+Create Text into window iLayoutWindowID
+	ReadControlValue(3)
+	(6,0.9) (19,23.7)
+	Font (".VnArialH", 1, 15, Black)
+	
+Create Text into window iLayoutWindowID
+	ReadControlValue(4)
+	(6.3,1.7) (19,23.7)
+	Font (".VnArial", 0, 13, Black)
+	
+Create Text into window iLayoutWindowID
+	Textbox1
+	(1.6,23.7) (5.9,23.7)
+	Font (".VnArialH", 0, 10, Black)
+
+Create Text into window iLayoutWindowID
+	Textbox2
+	(6.3,23.7) (10.3,23.7)
+	Font (".VnArialH", 0, 10, Black)
+
+Create Text into window iLayoutWindowID
+	Textbox3
+	(10.6,23.7) (14.5,23.7)
+	Font (".VnArialH", 0, 10, Black)
+
+Create Text into window iLayoutWindowID
+	Textbox4
+	(16.6,23.7) (19.5,23.7)
+	Font (".VnArialH", 0, 10, Black)
+
+
+' Create line 
+Create Pline into window iLayoutWindowID
+	2 (5.6,23.62) (5.6,29) 
+	Pen (1,2,Black)
+
+Create Pline into window iLayoutWindowID
+	2 (10.24,23.62) (10.24,29) 
+	Pen (1,2,Black)
+	
+Create Pline into window iLayoutWindowID
+	2 (14.8,23.62) (14.8,29) 
+	Pen (1,2,Black)
+
+Create Pline into window iLayoutWindowID
+	2 (1,24.35) (19.95,24.35) 
+	Pen (1,2,Black)
+	
+' Create legend 
+Create Pline into window iLayoutWindowID
+	2 (14.98,24.8) (16.32,24.8) 
+	Pen (2,31,Blue)
+
+Create Text into window iLayoutWindowID
+	legrgtk
+	(16.6,24.6) (20.1,25.1)
+	Font (".VnArial", 0, 10, Black)
+
+Create Pline into window iLayoutWindowID
+	2 (14.98,25.5) (16.32,25.5) 
+	Pen (2,03,Black)
+
+Create Text into window iLayoutWindowID
+	legkh
+	(16.6,25.3) (20.1,25.5)
+	Font (".VnArial", 0, 10, Black)
+' Binh do
+Create Pline into window iLayoutWindowID
+	2 (14.98,26.2) (16.32,26.2) 
+	Pen (2,02, 16754768)
+
+Create Text into window iLayoutWindowID
+	legbd
+	(16.6,26) (20.1,26)
+	Font (".VnArial", 0, 10, Black)
+
+' Rung trong
+
+Create Rect into window iLayoutWindowID
+	(14.98,26.5) (16.32,27.2)
+	Pen (1,1,BLACK)
+	Brush (2, 16752768, 16752768)
+
+Create Text into window iLayoutWindowID
+	legrtr
+	(16.6,26.7) (20.1,26.7)
+	Font (".VnArial", 0, 10, Black)	
+End Sub
+
+Sub iAbout
+	Dialog
+		Title "Huong dan su dung"
+	Control GroupBox
+		Position 5,2
+		Width 270
+		Height 108
+	
+	Control StaticText
+		Position 13,10
+		Title "Bo tien ich duoc thiet ke de giup nguoi su dung rut gon thoi gian Bien tap ban do."
+	Control StaticText
+		Position 7,25
+		Title "Bo tien ich gom co 2 chuc nang:"
+	Control StaticText
+		Position 13,38
+		Title "1 - Tao khung bao duoc thiet ke san dung voi ty le 1: 10 000, kho giay A4"
+	Control StaticText
+		Position 13,48
+		Title "2 - Tu dong dua ban do ra Layout duoc thiet ke san"
+	
+	Control StaticText
+		Position 13,60
+		Title "Sau khi da style mau` cho cac lop, su dung tool thu 1 ve khung bao. Sau do, dung"
+	Control StaticText
+		Position 7,71
+		Title "tool GEOMITECH de trich luoc ban do kem theo ve khung dua vao khung bao nay."
+	Control StaticText
+		Position 7,82
+		Title "Luu lai lop luoi."	
+		
+	Control StaticText
+		Position 13,95
+		Title "Mo lop luoi ra, zoom ban do theo lop Luoi. Su dung tool thu 2 de dua sang Layout."			
+	
+	Control StaticText 
+		Position 45, 113
+		Title "Bien tap ban do su dung cho tinh Ha Giang Version 1.0"
+		
+	Control StaticText 
+		Position 39, 125
+		Title "Create by Hoa Le 2014, Email contact : hoa.lq@gfd.com.vn"
+	Control OKButton 
+		Position 125, 139
+
+End Sub
+
+Sub ExitPro
+	If Ask("Ban co muon thoat chuong trinh khong?" ,"Yes", "No") then
+		End Program
+	End If
+End Sub
+
+

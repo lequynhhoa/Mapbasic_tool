@@ -1,0 +1,820 @@
+'*****************Create by Hoa Le *********************'
+' This script is updated 10 fields
+'*****************YEAH*********************************'
+
+Include "MapBasic.def"
+Include "Icons.def"
+Include "Menu.def"
+
+Declare Sub Main
+Declare Sub iSelection
+Declare Sub DialogUpdate
+Declare Sub UpdateRecord
+Declare Sub iIcons
+
+Global RawLdlrList() As String
+Global CheckLdlrList(93) As String
+Global CheckLdlrListCode(93) As Integer
+Global RawLdlrPop As String
+Global CheckLdlrPop As String
+Global IdRowTouch as Integer
+Global NumObjects As Integer
+Global TabName As String
+
+Global RawNggocrList() As String
+Global CheckNggocrList(3) As Integer
+Global RawNggocrPop As String
+Global CheckNggocrPop As String
+
+Global RawThanhrungList() As String
+Global CheckThanhrungList(2) As Integer
+Global RawThanhrungPop As String
+Global CheckThanhrungPop As String
+
+Global RawLapdiaList() As String
+Global CheckLapdiaList(6) As Integer
+Global RawLapdiaPop As String
+Global CheckLapdiaPop As String
+
+Global RawMalr3List() As String
+Global CheckMalr3List(3) AS Integer
+Global RawMalr3Pop As String
+Global CheckMalr3Pop As String
+
+Global RawMdsdList() As String
+Global CheckMdsdList(12) As String
+Global RawMdsdPop As String
+Global CheckMdsdPop As String
+
+Global RawDtuongList() As String
+Global CheckDtuongList(11) As Integer
+Global RawDtuongPop As String
+Global CheckDtuongPop As String
+
+Global RawTrchapList() As String
+Global CheckTrchapList(2) As Integer
+Global RawTrchapPop As String
+Global CheckTrchapPop As String
+
+Global RawQuyensdList() As String
+Global CheckQuyensdList(4) As Integer
+Global RawQuyensdPop As String
+Global CheckQuyensdPop As String
+
+Global RawKhoanList() As String
+Global CheckKhoanList(2) As String
+Global RawKhoanPop As String
+Global CheckKhoanPop As String
+
+
+Sub Main
+	Create menu "Cap nhat truong" As
+		"&Cap nhat ban ghi" Calling iIcons
+	Alter Menu "CAP NHAT KIEM KE" Add 
+		"&Cap nhat truong" As "Cap nhat truong"
+	Alter Menu Bar Add "CAP NHAT KIEM KE"
+	
+End Sub
+
+Sub iIcons
+
+	Create ButtonPad "Custom" As
+	ToolButton 
+	Calling iSelection
+	Icon MI_ICON_INFO_2
+
+End Sub
+
+Sub DialogUpdate
+	
+	Dialog
+		Title "Cap nhat KKR"
+		
+	Control StaticText
+		Title "Ban ghi cu"
+		Position 55,7
+		
+	Control StaticText 
+		Title "Ban ghi moi"
+		Position 110, 7
+	
+' Ldlr	
+	Control StaticText
+		Title "ldlr : "
+		Position 5,23
+	
+	Control PopupMenu
+		ID 1
+		Position 55,21
+		Width 35
+		Title RawLdlrPop
+
+	Control PopupMenu
+		ID 2
+		Position 110,21
+		Title CheckLdlrPop
+		Width 35
+
+' Nggoc rung
+	Control StaticText
+		Title "nggocr : "
+		Position 5,42
+	
+	Control PopupMenu
+		ID 3
+		Position 55,41
+		Width 35
+		Title RawNggocrPop
+
+	Control PopupMenu
+		ID 4
+		Position 110,41
+		Title CheckNggocrPop
+		Width 35
+
+' Thanh rung
+	Control StaticText
+		Title "thanhrung : "
+		Position 5,62
+	
+	Control PopupMenu
+		ID 5
+		Position 55,61
+		Width 35
+		Title RawThanhrungPop
+	
+	Control PopupMenu
+		Id 6
+		Position 110,61
+		Width 35
+		Title CheckThanhrungPop
+
+' lap dia
+	Control StaticText
+		Title "lap dia : "
+		Position 5,82
+	
+	Control PopupMenu
+		ID 7
+		Position 55,81
+		Width 35
+		Title RawLapdiaPop
+	
+	Control PopupMenu
+		Id 8
+		Position 110,81
+		Width 35
+		Title CheckLapdiaPop
+
+' Malr3
+	Control StaticText
+		Title "malr3 : "
+		Position 5,102
+	
+	Control PopupMenu
+		ID 9
+		Position 55,101
+		Width 35
+		Title RawMalr3Pop
+	
+	Control PopupMenu
+		Id 10
+		Position 110,101
+		Width 35
+		Title CheckMalr3Pop
+
+' Mdsd
+	Control StaticText
+		Title "mdsd : "
+		Position 5,122
+	
+	Control PopupMenu
+		ID 11
+		Position 55,121
+		Width 35
+		Title RawMdsdPop
+	
+	Control PopupMenu
+		Id 12
+		Position 110,121
+		Width 35
+		Title CheckMdsdPop
+
+' dtuong
+	Control StaticText
+		Title "dtuong : "
+		Position 5,142
+	
+	Control PopupMenu
+		ID 13
+		Position 55,141
+		Width 35
+		Title RawDtuongPop
+	
+	Control PopupMenu
+		Id 14
+		Position 110,141
+		Width 35
+		Title CheckDtuongPop
+
+' trchap
+	Control StaticText
+		Title "trchap : "
+		Position 5,162
+	
+	Control PopupMenu
+		ID 15
+		Position 55,161
+		Width 35
+		Title RawTrchapPop
+	
+	Control PopupMenu
+		Id 16
+		Position 110,161
+		Width 35
+		Title CheckTrchapPop
+
+' quyensd
+	Control StaticText
+		Title "trchap : "
+		Position 5,182
+	
+	Control PopupMenu
+		ID 17
+		Position 55,181
+		Width 35
+		Title RawQuyensdPop
+	
+	Control PopupMenu
+		Id 18
+		Position 110,181
+		Width 35
+		Title CheckQuyensdPop
+		
+' khoan
+	Control StaticText
+		Title "khoan : "
+		Position 5,202
+	
+	Control PopupMenu
+		ID 19
+		Position 55,201
+		Width 35
+		Title RawKhoanPop
+	
+	Control PopupMenu
+		Id 20
+		Position 110,201
+		Width 35
+		Title CheckKhoanPop
+'* Cap nhat Button
+	Control Button
+		Title "Cap nhat"
+		Position 27,225
+		Calling UpdateRecord
+		
+	Control CancelButton
+		Title "Huy"
+		Position 83, 225
+	
+	
+End Sub
+
+Sub iSelection
+	Dim iSelect As Integer
+	Dim RawValueSql As String
+	Dim RawLdlr As Alias
+	Dim CheckLdlr As Alias
+	
+	Dim RawNggocr As Alias
+	Dim CheckNggocr As Alias
+	
+	Dim RawThanhrung As Alias
+	Dim CheckThanhrung As Alias
+	
+	Dim RawLapdia AS Alias
+	Dim CheckLapdia As Alias
+	
+	Dim RawMalr3 As Alias
+	Dim CheckMalr3 As Alias
+	
+	Dim RawMdsd As Alias
+	Dim CheckMdsd As Alias
+	
+	Dim RawDtuong As Alias
+	Dim CheckDtuong As Alias
+	
+	Dim RawTrchap As Alias
+	Dim CheckTrchap As Alias
+	
+	Dim RawQuyensd As Alias
+	Dim CheckQuyensd As Alias
+	
+	Dim RawKhoan As Alias
+	Dim CheckKhoan As Alias
+	
+	Dim i As Integer
+	
+	'Dim MyIdRow as Float
+	Dim IdMap as Integer
+	Dim X as Float
+	Dim Y as Float
+	
+	IdMap = FrontWindow()
+	X = CommandInfo(1)
+	Y = CommandInfo(2)
+	NumObjects = SearchPoint(IdMap, X, Y)
+	IdRowTouch = SearchInfo(NumObjects , 2)
+	TabName = SearchInfo(NumObjects,1)
+	Select * from TabName where RowID = IdRowTouch 
+
+	If NumObjects = 0 then
+		Note "Select an Object"
+
+'	ElseIf NumObjects > 1 then
+'		Note "Please Select Only an Object"
+
+	ElseIf NumObjects = 1 then
+	i = 1
+	Fetch First From Selection
+
+		Do While NOT EOT(Selection)
+			RawLdlr = Selection & ".ldlr"
+			RawNggocr = Selection & ".nggocr"
+			RawThanhrung = Selection & ".thanhrung"
+			RawLapdia = Selection & ".lapdia"
+			RawMalr3 = Selection & ".malr3"
+			RawMdsd = Selection & ".mdsd"
+			RawDtuong = Selection & ".dtuong"
+			RawTrchap = Selection & ".trchap"
+			RawQuyensd = Selection & ".quyensd"
+			RawKhoan = Selection & ".khoan"
+			
+			i = i + 1 
+			Redim RawLdlrList(i)
+			Redim RawNggocrList(i)
+			ReDim RawThanhrungList(i)
+			ReDim RawLapdiaList(i)
+			ReDim RawMalr3List(i)
+			ReDim RawMdsdList(i)
+			ReDim RawDtuongList(i)
+			Redim RawTrchapList(i)
+			ReDim RawQuyensdList(i)
+			ReDim RawKhoanList(i)
+			
+			RawLdlrList(i) = RawLdlr
+			RawNggocrList(i) = RawNggocr
+			RawThanhrungList(i) = RawThanhrung
+			RawLapdiaList(i) = RawLapdia
+			RawMalr3List(i) = RawMalr3
+			RawMdsdList(i) = RawMdsd
+			RawDtuongList(i) = RawDtuong
+			RawTrchapList(i) = RawTrchap
+			RawQuyensdList(i) = RawQuyensd
+			RawKhoanList(i) = RawKhoan
+		
+			If RawValueSql = "" then
+				RawValueSql = Chr$(34) & RawLdlr & Chr$(34)
+				RawLdlrPop = RawLdlr 	
+				RawValueSql = Chr$(34) & RawNggocr & Chr$(34)
+				RawNggocrPop = RawNggocr 	
+				RawValueSql = Chr$(34) & RawThanhrung & Chr$(34)
+				RawThanhrungPop = RawThanhrung
+				RawValueSql= Chr$(34) & RawLapdia & Chr$(34)
+				RawLapdiaPop = RawLapdia
+				RawValueSql = Chr$(34) & RawMalr3 & Chr$(34)
+				RawMalr3Pop = RawMalr3
+				RawValueSql = Chr$(34) & RawMdsd & Chr$(34)
+				RawMdsdPop = RawMdsd
+				RawValueSql = Chr$(34) & RawDtuong & Chr$(34)
+				RawDtuongPop = RawDtuong
+				RawValueSql = Chr$(34) & RawTrchap & Chr$(34)
+				RawTrchapPop = RawTrchap
+				RawValueSql = Chr$(34) & RawQuyensd & Chr$(34)
+				RawQuyensdPop = RawQuyensd
+				RawValueSql = Chr$(34) & RawKhoan & Chr$(34)
+				RawKhoanPop = RawKhoan
+				
+			Else 
+				RawValueSql = RawValueSql & " , " & Chr$(34) & RawLdlr & Chr$(34)
+				RawLdlrPop = RawLdlrPop & " ; " & RawLdlr 
+				RawValueSql = RawValueSql & " , " & Chr$(34) & RawNggocr & Chr$(34)
+				RawNggocrPop = RawNggocrPop & " ; " & RawNggocr 
+				RawValueSql = RawValueSql & " , " & Chr$(34) & RawThanhrung & Chr$(34)
+				RawThanhrungPop = RawThanhrungPop & " ; " & RawThanhrung
+				RawValueSql = RawValueSql & " , " & Chr$(34) & RawLapdia & Chr$(34)
+				RawLapdiaPop = RawLapdiaPop & " ; " & RawLapdia
+				RawValueSql = RawValueSql & " , " & Chr$(34) & RawMalr3 & Chr$(34)
+				RawMalr3Pop = RawMalr3Pop & " ; " & RawMalr3
+				RawValueSql = RawValueSql & " , " & Chr$(34) & RawMdsd & Chr$(34)
+				RawMdsdPop = RawMdsdPop & " ; " & RawMdsd
+				RawValueSql = RawValueSql & " , " & Chr$(34) & RawDtuong & Chr$(34)
+				RawDtuongPop = RawValueSql & " ; " & RawDtuong
+				RawValueSql = RawValueSql & " , " & Chr$(34) & RawTrchap & Chr$(34)
+				RawTrchapPop = RawValueSql & " ; " & RawTrchap
+				RawValueSql = RawValueSql & " , " & Chr$(34) & RawQuyensd & Chr$(34)
+				RawQuyensdPop = RawQuyensdPop & " ; " & RawQuyensd
+				RawValueSql = RawValueSql & " , " & Chr$(34) & RawKhoan & Chr$(34)
+				RawKhoanPop = RawKhoanPop & " ; " & RawKhoan
+			End If
+		
+			Fetch Next From Selection
+		Loop
+		
+		CheckLdlrPop = "bc1;bc2;cd;cdd;cdn;dkh;dt1;dt1d;dt1m;dt1p;dt2;dt2d;dt2m;dt2p;dtr;dtrc;dtrd;dtrm;dtrn;dtrp;hg1;hg2;hgd;lkb;lkb1;lkg;lkg1;lkk;lkn;lkp;loo;mn;nn;nnd;nnm;nnp;nua;rkb;rkb1;rkg;rkg1;rkk;rkn;rkp;rlb;rlb1;rlg;rlg1;rlk;rln;rlp;rnm1;rnmb;rnmg;rnmn;rnmp;rnn;rnp1;rnp1;rnpb;rnpg;rnpn;rnpp;rtc;rtcd;rtcdc;rtcdn;rtg;rtgd;rtk;rtkd;rtm;rtp;rttn;rttnd;tlu;tnd;tnk;txb;txb1;txdb;txdb1;txdg;txdg1;txdk;txdn;txdp;txg;txg1;txk;txn;txp;vau"
+		CheckNggocrPop = "1;2;3"
+		CheckThanhrungPop = "1;2"
+		CheckLapdiaPop = "1;2;3;4;5;6"
+		CheckMalr3Pop = "1;2;3"
+		CheckMdsdPop = "phdn;phcs;phcc;phmt;vqg;bttn;nckh;vhcq;sxgl;sxgn;sxtn;mdk"
+		CheckDtuongPop = "1;2;3;4;5;6;7;8;9;10;11"
+		CheckTrchapPop = "1;2"
+		CheckQuyensdPop = "1;2;3;4"
+		CheckKhoanPop = "1;2"
+		Call DialogUpdate
+		
+	End If
+
+
+	
+End Sub
+
+Sub UpdateRecord
+	Dim RawLdlr As String
+	Dim CheckLdlr As String
+	Dim RawLdlrId As Integer
+	Dim CheckLdlrId As Integer
+	
+	Dim CheckLdlrCode As Integer
+	
+	Dim RawNggocr As Integer
+	Dim CheckNggocr As Integer
+	Dim RawNggocrId As Integer
+	Dim CheckNggocrId As Integer
+	
+	Dim RawThanhrung As Integer
+	Dim CheckThanhrung As Integer
+	Dim RawThanhrungId As Integer
+	Dim CheckThanhrungId As Integer
+	
+	Dim RawLapdia As Integer
+	Dim CheckLapdia As Integer
+	Dim RawLapdiaId AS Integer
+	Dim CheckLapdiaId As Integer
+	
+	Dim RawMalr3 As Integer
+	Dim CheckMalr3 As Integer
+	Dim RawMalr3Id As Integer
+	Dim CheckMalr3Id As Integer
+	
+	Dim RawMdsd As String
+	Dim CheckMdsd As String
+	Dim RawMdsdId As Integer
+	Dim CheckMdsdId As Integer
+	
+	Dim RawDtuong As Integer
+	Dim CheckDtuong As Integer
+	Dim RawDtuongId As Integer
+	Dim CheckDtuongId As Integer
+	
+	Dim RawTrchap As Integer
+	Dim CheckTrchap As Integer
+	Dim RawTrchapId As Integer
+	Dim CheckTrchapId As Integer
+	
+	Dim RawQuyensd As Integer
+	Dim CheckQuyensd As Integer
+	Dim RawQuyensdId As Integer
+	Dim CheckQuyensdId As Integer
+	
+	Dim RawKhoan As Integer
+	Dim CheckKhoan As Integer
+	Dim RawKhoanId As Integer
+	Dim CheckKhoanId As Integer
+	
+	
+	RawLdlrId = ReadControlValue(1)
+	CheckLdlrId = ReadControlValue(2)
+	RawNggocrId = ReadControlValue(3)
+	CheckNggocrId = ReadControlValue(4)
+	RawThanhrungId = ReadControlValue(5)
+	CheckThanhrungId = ReadControlValue(6)
+	RawLapdiaId = ReadControlValue(7)
+	CheckLapdiaId = ReadControlValue(8)
+	RawMalr3ID = ReadControlValue(9)
+	CheckMalr3Id = ReadControlValue(10)
+	RawMdsdId = ReadControlValue(11)
+	CheckMdsdId = ReadControlValue(12)
+	RawDtuongId = ReadControlValue(13)
+	CheckDtuongId = ReadControlValue(14)
+	RawTrchapId = ReadControlValue(15)
+	CheckTrchapId = ReadControlValue(16)
+	RawQuyensdId = ReadControlValue(17)
+	CheckQuyensdId = ReadControlValue(18)
+	RawKhoanId = ReadControlValue(19)
+	CheckKhoanId = ReadControlValue(20)
+
+	'Print "RawLdlrId: " & RawLdlrId  & " , CheckLdlrId: " & CheckLdlrId 
+	'Print "UBound(RawLdlrList) :" & UBound(RawLdlrList) & " , UBound(CheckLdlrList) :" & UBound(CheckLdlrList) 
+
+'* String ldlr
+	CheckLdlrList (1) =  "bc1"
+	CheckLdlrList (2) =  "bc2"
+	CheckLdlrList (3) =  "cd"
+	CheckLdlrList (4) =  "cdd"
+	CheckLdlrList (5) =  "cdn"
+	CheckLdlrList (6) =  "dkh"
+	CheckLdlrList (7) =  "dt1"
+	CheckLdlrList (8) =  "dt1d"
+	CheckLdlrList (9) =  "dt1m"
+	CheckLdlrList (10) =  "dt1p"
+	CheckLdlrList (11) =  "dt2"
+	CheckLdlrList (12) =  "dt2d"
+	CheckLdlrList (13) =  "dt2m"
+	CheckLdlrList (14) =  "dt2p"
+	CheckLdlrList (15) =  "dtr"
+	CheckLdlrList (16) =  "dtrc"
+	CheckLdlrList (17) =  "dtrd"
+	CheckLdlrList (18) =  "dtrm"
+	CheckLdlrList (19) =  "dtrn"
+	CheckLdlrList (20) =  "dtrp"
+	CheckLdlrList (21) =  "hg1"
+	CheckLdlrList (22) =  "hg2"
+	CheckLdlrList (23) =  "hgd"
+	CheckLdlrList (24) =  "lkb"
+	CheckLdlrList (25) =  "lkb1"
+	CheckLdlrList (26) =  "lkg"
+	CheckLdlrList (27) =  "lkg1"
+	CheckLdlrList (28) =  "lkk"
+	CheckLdlrList (29) =  "lkn"
+	CheckLdlrList (30) =  "lkp"
+	CheckLdlrList (31) =  "loo"
+	CheckLdlrList (32) =  "mn"
+	CheckLdlrList (33) =  "nl"
+	CheckLdlrList (34) =  "nnd"
+	CheckLdlrList (35) =  "nnm"
+	CheckLdlrList (36) =  "nnp"
+	CheckLdlrList (37) =  "nua"
+	CheckLdlrList (38) =  "rkb"
+	CheckLdlrList (39) =  "rkb1"
+	CheckLdlrList (40) =  "rkg"
+	CheckLdlrList (41) =  "rkg1"
+	CheckLdlrList (42) =  "rkk"
+	CheckLdlrList (43) =  "rkn"
+	CheckLdlrList (44) =  "rkp"
+	CheckLdlrList (45) =  "rlb"
+	CheckLdlrList (46) =  "rlb1"
+	CheckLdlrList (47) =  "rlg"
+	CheckLdlrList (48) =  "rlg1"
+	CheckLdlrList (49) =  "rlk"
+	CheckLdlrList (50) =  "rln"
+	CheckLdlrList (51) =  "rlp"
+	CheckLdlrList (52) =  "rnm1"
+	CheckLdlrList (53) =  "rnmb"
+	CheckLdlrList (54) =  "rnmg"
+	CheckLdlrList (55) =  "rnmn"
+	CheckLdlrList (56) =  "rnmp"
+	CheckLdlrList (57) =  "rnn"
+	CheckLdlrList (58) =  "rnn1"
+	CheckLdlrList (59) =  "rnp1"
+	CheckLdlrList (60) =  "rnpb"
+	CheckLdlrList (61) =  "rnpg"
+	CheckLdlrList (62) =  "rnpn"
+	CheckLdlrList (63) =  "rnpp"
+	CheckLdlrList (64) =  "rtc"
+	CheckLdlrList (65) =  "rtcd"
+	CheckLdlrList (66) =  "rtcdc"
+	CheckLdlrList (67) =  "rtcdn"
+	CheckLdlrList (68) =  "rtg"
+	CheckLdlrList (69) =  "rtgd"
+	CheckLdlrList (70) =  "rtk"
+	CheckLdlrList (71) =  "rtkd"
+	CheckLdlrList (72) =  "rtm"
+	CheckLdlrList (73) =  "rtp"
+	CheckLdlrList (74) =  "rttn"
+	CheckLdlrList (75) =  "rttnd"
+	CheckLdlrList (76) =  "tlu"
+	CheckLdlrList (77) =  "tnd"
+	CheckLdlrList (78) =  "tnk"
+	CheckLdlrList (79) =  "txb"
+	CheckLdlrList (80) =  "txb1"
+	CheckLdlrList (81) =  "txdb"
+	CheckLdlrList (82) =  "txdb1"
+	CheckLdlrList (83) =  "txdg"
+	CheckLdlrList (84) =  "txdg1"
+	CheckLdlrList (85) =  "txdk"
+	CheckLdlrList (86) =  "txdn"
+	CheckLdlrList (87) =  "txdp"
+	CheckLdlrList (88) =  "txg"
+	CheckLdlrList (89) =  "txg1"
+	CheckLdlrList (90) =  "txk"
+	CheckLdlrList (91) =  "txn"
+	CheckLdlrList (92) =  "txp"
+	CheckLdlrList (93) =  "vau"
+'* Code ldlr
+	CheckLdlrListCode(1)=86
+	CheckLdlrListCode(2)=87
+	CheckLdlrListCode(3)=57
+	CheckLdlrListCode(4)=58
+	CheckLdlrListCode(5)=59
+	CheckLdlrListCode(6)=93
+	CheckLdlrListCode(7)=82
+	CheckLdlrListCode(8)=83
+	CheckLdlrListCode(9)=84
+	CheckLdlrListCode(10)=85
+	CheckLdlrListCode(11)=78
+	CheckLdlrListCode(12)=79
+	CheckLdlrListCode(13)=80
+	CheckLdlrListCode(14)=81
+	CheckLdlrListCode(15)=72
+	CheckLdlrListCode(16)=77
+	CheckLdlrListCode(17)=73
+	CheckLdlrListCode(18)=74
+	CheckLdlrListCode(19)=76
+	CheckLdlrListCode(20)=75
+	CheckLdlrListCode(21)=54
+	CheckLdlrListCode(22)=55
+	CheckLdlrListCode(23)=56
+	CheckLdlrListCode(24)=25
+	CheckLdlrListCode(25)=6
+	CheckLdlrListCode(26)=24
+	CheckLdlrListCode(27)=5
+	CheckLdlrListCode(28)=27
+	CheckLdlrListCode(29)=26
+	CheckLdlrListCode(30)=28
+	CheckLdlrListCode(31)=51
+	CheckLdlrListCode(32)=92
+	CheckLdlrListCode(33)=88
+	CheckLdlrListCode(34)=89
+	CheckLdlrListCode(35)=90
+	CheckLdlrListCode(36)=91
+	CheckLdlrListCode(37)=49
+	CheckLdlrListCode(38)=30
+	CheckLdlrListCode(39)=8
+	CheckLdlrListCode(40)=29
+	CheckLdlrListCode(41)=7
+	CheckLdlrListCode(42)=32
+	CheckLdlrListCode(43)=31
+	CheckLdlrListCode(44)=33
+	CheckLdlrListCode(45)=20
+	CheckLdlrListCode(46)=4
+	CheckLdlrListCode(47)=19
+	CheckLdlrListCode(48)=3
+	CheckLdlrListCode(49)=22
+	CheckLdlrListCode(50)=21
+	CheckLdlrListCode(51)=23
+	CheckLdlrListCode(52)=11
+	CheckLdlrListCode(53)=40
+	CheckLdlrListCode(54)=39
+	CheckLdlrListCode(55)=41
+	CheckLdlrListCode(56)=42
+	CheckLdlrListCode(57)=47
+	CheckLdlrListCode(58)=12
+	CheckLdlrListCode(59)=13
+	CheckLdlrListCode(60)=44
+	CheckLdlrListCode(61)=43
+	CheckLdlrListCode(62)=45
+	CheckLdlrListCode(63)=46
+	CheckLdlrListCode(64)=64
+	CheckLdlrListCode(65)=67
+	CheckLdlrListCode(66)=69
+	CheckLdlrListCode(67)=68
+	CheckLdlrListCode(68)=60
+	CheckLdlrListCode(69)=61
+	CheckLdlrListCode(70)=70
+	CheckLdlrListCode(71)=71
+	CheckLdlrListCode(72)=62
+	CheckLdlrListCode(73)=63
+	CheckLdlrListCode(74)=65
+	CheckLdlrListCode(75)=66
+	CheckLdlrListCode(76)=48
+	CheckLdlrListCode(77)=53
+	CheckLdlrListCode(78)=52
+	CheckLdlrListCode(79)=15
+	CheckLdlrListCode(80)=2
+	CheckLdlrListCode(81)=35
+	CheckLdlrListCode(82)=10
+	CheckLdlrListCode(83)=34
+	CheckLdlrListCode(84)=9
+	CheckLdlrListCode(85)=37
+	CheckLdlrListCode(86)=36
+	CheckLdlrListCode(87)=38
+	CheckLdlrListCode(88)=14
+	CheckLdlrListCode(89)=1
+	CheckLdlrListCode(90)=17
+	CheckLdlrListCode(91)=16
+	CheckLdlrListCode(92)=18
+	CheckLdlrListCode(93)=50
+
+'* Checklist nggoc rung
+	CheckNggocrList (1) =  1
+	CheckNggocrList (2) =  2
+	CheckNggocrList (3) =  3
+
+'* Check list thanhrung
+	CheckThanhrungList (1) = 1
+	CheckThanhrungList (2) = 2
+
+'* Check List lapdia
+	CheckLapdiaList (1) = 1
+	CheckLapdiaList (2) = 2
+	CheckLapdiaList (3) = 3
+	CheckLapdiaList (4) = 4
+	CheckLapdiaList (5) = 5
+	CheckLapdiaList (6) = 6
+
+'* Check List malr3
+	CheckMalr3List (1) = 1
+	CheckMalr3List (2) = 2
+	CheckMalr3List (3) = 3
+	
+'* Check List mdsd
+	CheckMdsdList (1) = "phdn"
+	CheckMdsdList (2) = "phcs"
+	CheckMdsdList (3) = "phcc"
+	CheckMdsdList (4) = "phmt"
+	CheckMdsdList (5) = "vqg"
+	CheckMdsdList (6) = "bttn"	
+	CheckMdsdList (7) = "nckh"
+	CheckMdsdList (8) = "vhcq"
+	CheckMdsdList (9) = "sxgl"
+	CheckMdsdList (10) = "sxgn"
+	CheckMdsdList (11) = "sxtn"
+	CheckMdsdList (12) = "mdk"
+	
+'* Check List Dtuong
+	CheckDtuongList (1) = 1
+	CheckDtuongList (2) = 2
+	CheckDtuongList (3) = 3
+	CheckDtuongList (4) = 4
+	CheckDtuongList (5) = 5
+	CheckDtuongList (6) = 6
+	CheckDtuongList (7) = 7
+	CheckDtuongList (8) = 8
+	CheckDtuongList (9) = 9
+	CheckDtuongList (10) = 10
+	CheckDtuongList (11) = 11
+	
+'* Check List trchap
+	CheckTrchapList (1) = 1
+	CheckTrchapList (2) = 2
+	
+'* Check List quyensd
+	CheckQuyensdList (1) = 1
+	CheckQuyensdList (2) = 2
+	CheckQuyensdList (3) = 3
+	CheckQuyensdList (4) = 4
+
+'* Check List khoan
+	CheckKhoanList (1) = 1
+	CheckKhoanList (2) = 2
+	
+	RawLdlr = RawLdlrList(RawLdlrId)
+	CheckLdlr = CheckLdlrList(CheckLdlrId)
+	
+	CheckLdlrCode = CheckLdlrListCode(CheckLdlrId)
+	
+	RawNggocr = RawNggocrList(RawNggocrId)
+	CheckNggocr = CheckNggocrList(CheckNggocrId)
+	
+	RawThanhrung = RawThanhrungList(RawThanhrungId)
+	CheckThanhrung = CheckThanhrungList(CheckThanhrungId)
+	
+	RawLapdia = RawLapdiaList(RawLapdiaId)
+	CheckLapdia = CheckLapdiaList(CheckLapdiaId)
+	
+	RawMalr3 = RawMalr3List(RawMalr3Id)
+	CheckMalr3 = CheckMalr3List(CheckMalr3Id)
+	
+	RawMdsd = RawMdsdList(RawMdsdId)
+	CheckMdsd = CheckMdsdList(CheckMdsdId)
+	
+	RawDtuong = RawDtuongList(RawDtuongId)
+	CheckDtuong = CheckDtuongList(CheckDtuongId)
+	
+	RawTrchap = RawTrchapList(RawTrchapId)
+	CheckTrchap = CheckTrchapList(CheckTrchapId)
+	
+	RawQuyensd = RawQuyensdList(RawQuyensdId)
+	CheckQuyensd = CheckQuyensdList(CheckQuyensdId)
+	
+	RawKhoan = RawKhoanList(RawKhoanId)
+	CheckKhoan = CheckKhoanList(CheckKhoanId)
+	
+	IdRowTouch = SearchInfo(NumObjects ,2)
+	'Print IdRowTouch
+	Select * from TabName where RowId = IdRowTouch into MySelect
+	'Note SelectionInfo(SEL_INFO_NROWS)
+	Update MySelect Set ldlr = CheckLdlr		'Update ldlr
+	Update MySelect set maldlr = CheckLdlrCode		' Update new maldlr
+	Update MySelect set nggocr = CheckNggocr
+	Update MySelect Set thanhrung = CheckThanhrung
+	Update MySelect set lapdia = CheckLapdia
+	Update MySelect set malr3 = CheckMalr3
+	Update MySelect Set mdsd = CheckMdsd
+	Update MySelect Set dtuong = CheckDtuong
+	Update MySelect Set trchap = CheckTrchap
+	Update MySelect Set quyensd = CheckQuyensd
+	Update MySelect Set khoan = CheckKhoan
+
+End Sub
